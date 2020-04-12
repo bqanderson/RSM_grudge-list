@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import id from 'uuid/v4'
+import { v4 as id } from 'uuid'
 
 import Grudges from './Grudges'
 import NewGrudge from './NewGrudge'
