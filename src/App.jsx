@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useCallback } from 'react'
 import { v4 as id } from 'uuid'
 
 import Grudges from './Grudges'
@@ -26,24 +26,30 @@ const reducer = (state, action) => {
 const App = () => {
   const [grudges, dispatch] = useReducer(reducer, initialState)
 
-  const addGrudge = ({ person, reason }) => {
-    dispatch({
-      type: GRUDGE_ADD,
-      payload: {
-        id: id(),
-        person,
-        reason,
-        forgiven: false,
-      },
-    })
-  }
+  const addGrudge = useCallback(
+    ({ person, reason }) => {
+      dispatch({
+        type: GRUDGE_ADD,
+        payload: {
+          id: id(),
+          person,
+          reason,
+          forgiven: false,
+        },
+      })
+    },
+    [dispatch]
+  )
 
-  const toggleForgiveness = id => {
-    dispatch({
-      type: GRUDGE_FORGIVE,
-      payload: { id },
-    })
-  }
+  const toggleForgiveness = useCallback(
+    id => {
+      dispatch({
+        type: GRUDGE_FORGIVE,
+        payload: { id },
+      })
+    },
+    [dispatch]
+  )
 
   return (
     <div className='Application'>
