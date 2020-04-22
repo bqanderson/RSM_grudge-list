@@ -12,6 +12,8 @@ const NewGrudge = React.memo(() => {
   const handleChange = e => {
     e.preventDefault()
     addGrudge({ person, reason })
+    setPerson('')
+    setReason('')
   }
 
   return (
