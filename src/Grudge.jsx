@@ -6,8 +6,6 @@ const Grudge = React.memo(({ grudge }) => {
 
   const forgive = () => toggleForgiveness(grudge.id)
 
-  console.log('Rendering Grudge:', grudge.id)
-
   return (
     <article className='Grudge'>
       <h3>{grudge.person}</h3>
