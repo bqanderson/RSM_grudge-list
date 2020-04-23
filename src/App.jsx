@@ -5,16 +5,18 @@ import NewGrudge from './NewGrudge'
 import { GrudgeContext } from './GrudgeContext'
 
 const App = () => {
-  const { undo, isPast } = useContext(GrudgeContext)
+  const { undo, redo, isPast, isFuture } = useContext(GrudgeContext)
 
   return (
     <div className='Application'>
       <NewGrudge />
-      <section style={{ marginTop: '10px' }}>
-        <button disabled={!isPast} onClick={undo}>
+      <section>
+        <button className='full-width' disabled={!isPast} onClick={undo}>
           Undo
         </button>
-        <button>Redo</button>
+        <button className='full-width' disabled={!isFuture} onClick={redo}>
+          Redo
+        </button>
       </section>
       <Grudges />
     </div>

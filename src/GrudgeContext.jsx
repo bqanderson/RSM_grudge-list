@@ -8,6 +8,7 @@ export const GrudgeContext = createContext()
 const GRUDGE_ADD = 'GRUDGE_ADD'
 const GRUDGE_FORGIVE = 'GRUDGE_FORGIVE'
 const UNDO = 'UNDO'
+const REDO = 'REDO'
 
 const reducer = (state = defaultState, action) => {
   if (action.type === GRUDGE_ADD) {
@@ -46,6 +47,15 @@ const reducer = (state = defaultState, action) => {
       past: newPast,
       present: newPresent,
       future: [state.present, ...state.future],
+    }
+  }
+
+  if (action.type === REDO) {
+    const [newPresent, ...newFuture] = state.future
+    return {
+      past: [state.present, ...state.past],
+      present: newPresent,
+      future: newFuture,
     }
   }
 
@@ -90,12 +100,16 @@ export const GrudgeProvider = ({ children }) => {
   )
 
   const undo = useCallback(() => {
-    dispatch({ type: 'UNDO' })
+    dispatch({ type: UNDO })
+  }, [dispatch])
+
+  const redo = useCallback(() => {
+    dispatch({ type: REDO })
   }, [dispatch])
 
   return (
     <GrudgeContext.Provider
-      value={{ grudges, addGrudge, toggleForgiveness, undo, isPast, isFuture }}
+      value={{ grudges, addGrudge, toggleForgiveness, undo, redo, isPast, isFuture }}
     >
       {children}
     </GrudgeContext.Provider>
